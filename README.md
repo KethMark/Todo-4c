@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+This is not just a TODO application, It's a high quality TODO application.
 
-## Getting Started
+## Installation
 
-First, run the development server:
+Open your terminal, run this following
 
-```bash
+`` 
+npm install
+
+``
+Create your .env file, and paste your
+
+``
+DATABASE_URL='postgresql://neondb_owner:.......'
+
+``
+Note: You can use any database what you prefer but for this one I use postgress from Neon database.
+
+Open another terminal, run your application
+
+`` 
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+``
+Open the localhost 
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+``
+http://localhost:3000/
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+``
+Congrats 🎉👋
 
-## Learn More
+## Library, Framwork, Tools and more
 
-To learn more about Next.js, take a look at the following resources:
+• Nextjs 16
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+• Tanstack query
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+• Shadcn Ui
 
-## Deploy on Vercel
+• Axios
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+• Drizzle
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+• Tabler/icons-react
+
+• Zod
+
+• Typescript
+
+## Implementation 🎯
+
+— Backend 
+
+You can locate the backend implementation within the folder of app inside api where route.ts (GET, POST) and folder id where route.ts (UPDATE, DELETE)
+
+— Frontend
+
+By default, inside the level of app where the page.tsx render the table and call the function inside the /components/todo.tsx
+
+navigate into /components/table/data-table.tsx you can find the mutation render where the update data and mark as completed happened
+
+next in /components/table/column I handle the action, also the delete mutation and call the function inside the  /components/table/data-table-row-actions.tsx
+
+and lastly the creation data happened render inside the /component/table/data-table where the DataTableToolbar function and call the function inside the /components/table/data-table-toolbar.tsx and you can find the AddTodo render the function
