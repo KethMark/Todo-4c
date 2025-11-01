@@ -1,5 +1,19 @@
 This is not just a TODO application, It's a high quality TODO application.
 
+## Cloning
+
+In your terminal, run this following
+
+``
+git clone https://github.com/KethMark/Todo-4c.git
+
+``
+cd Todo-4c
+
+``
+code .
+
+
 ## Installation
 
 Open your terminal, run this following
