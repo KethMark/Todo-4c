@@ -12,11 +12,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { DataTableMeta } from "./data-table";
-import { todoSchema, TodoSchema } from "../todo";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "sonner";
 import z from "zod";
+import { todoSchema, TodoSchema } from "@/lib/todoSchema";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;

@@ -25,6 +25,6 @@ export async function POST(req: Request) {
 
   } catch (error) {
     console.error("Unable to create a Todo:", error);
-    return NextResponse.json({ error: "Failed to create Todo" },{ status: 500 });
+    return NextResponse.json({ error: "Failed to create Todo" },{ status: 400 });
   }
 }

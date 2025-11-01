@@ -25,12 +25,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { TodoSchema } from "../todo";
 import { DataTableToolbar } from "./data-table-toolbar";
 import { DataTablePagination } from "./data-table-pagination";
+import { TodoSchema } from "@/lib/todoSchema";
 
 export interface DataTableMeta<TData> {
   editingRowId: string | null;
@@ -70,10 +70,17 @@ export function DataTable<TData extends TodoSchema, TValue>({
   const { mutateAsync } = useMutation({
     mutationKey: ["TodoList"],
     mutationFn: async (data: TodoSchema) => {
-      const res = await axios
-        .put(`/api/todo/${data.id}`, data)
-        .then((res) => res.data);
-      return res;
+      try {
+        const res = await axios
+          .put(`/api/todo/${data.id}`, data)
+          .then((res) => res.data);
+        return res;
+      } catch (error) {
+        if (isAxiosError(error) && error.response) {
+          throw error.response.data; 
+        }
+        throw new Error("An unexpected error occurred");
+      }
     },
 
     onMutate: async (updatedTodo: TodoSchema) => {

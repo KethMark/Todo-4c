@@ -18,7 +18,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
@@ -30,9 +30,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios"
+import axios, {isAxiosError} from "axios";
 import { toast } from "sonner";
-import { todoSchema, TodoSchema } from "./todo";
+import { todoSchema, TodoSchema } from "@/lib/todoSchema";
 
 export const AddTodo = () => {
   const queryClient = useQueryClient();
@@ -50,21 +50,33 @@ export const AddTodo = () => {
   //handle post mutation (upload)
   const mutation = useMutation({
     mutationFn: async (data: TodoSchema) => {
-      const res = await axios.post("/api/todo", data);
-      return res.data
+      try {
+        const payload = {
+          ...data,
+          age: parseInt(data.age, 10)
+        };
+        
+        const res = await axios.post("/api/todo", payload);
+        return res.data;
+      } catch (error) {
+        if(isAxiosError(error) && error.response) {
+          throw error.response.data
+        }
+        throw new Error("An Unexpected Error occured")
+      }
     },
     onSuccess: () => {
       form.reset();
-      queryClient.invalidateQueries({ queryKey: ["Todo"]});
+      queryClient.invalidateQueries({ queryKey: ["Todo"] });
     },
-  })
+  });
 
   function onSubmit(values: TodoSchema) {
     toast.promise(mutation.mutateAsync(values), {
       loading: "Submitting...",
       success: (data) => data.text,
-      error: (data) => data.error
-    })
+      error: (data) => data.error,
+    });
   }
 
   return (
@@ -80,8 +92,8 @@ export const AddTodo = () => {
             <DialogHeader>
               <DialogTitle>Add Todo</DialogTitle>
               <DialogDescription>
-                Fill in the Todo&apos;s details below. Click save when you&apos;re
-                done.
+                Fill in the Todo&apos;s details below. Click save when
+                you&apos;re done.
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
@@ -105,10 +117,7 @@ export const AddTodo = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Gender</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      value={field.value}
-                    >
+                    <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Select a gender" />
@@ -151,7 +160,6 @@ export const AddTodo = () => {
                   </FormItem>
                 )}
               />
-
             </div>
 
             <DialogFooter>

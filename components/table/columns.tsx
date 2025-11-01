@@ -11,10 +11,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { TodoSchema } from "../todo";
 import { Gender } from "@/lib/data";
 import { DataTableColumnHeader } from "./data-table-column-header";
 import { DataTableRowActions } from "./data-table-row-actions";
+import { TodoSchema } from "@/lib/todoSchema";
 
 export const columns: ColumnDef<TodoSchema>[] = [
   {
